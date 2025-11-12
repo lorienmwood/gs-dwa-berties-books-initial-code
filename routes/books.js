@@ -6,8 +6,8 @@ router.get("/search", function (req, res) {
   res.render("search.ejs");
 });
 
-// Route for Search Results - Returns to search-results.ejs
-router.get("/search-result", function (req, res, next) {
+// Route for Search Results - Returns to searchresults.ejs
+router.get("/searchresults", function (req, res, next) {
   let keyword = req.query.keyword;
   let sqlquery = "SELECT * FROM books WHERE name LIKE ?";
   let search = `%${keyword}%`;
@@ -16,7 +16,7 @@ router.get("/search-result", function (req, res, next) {
     if (err) {
       return next(err);
     } else {
-      res.render("search-results.ejs", {
+      res.render("searchresults.ejs", {
         keyword: keyword,
         books: result,
       });
