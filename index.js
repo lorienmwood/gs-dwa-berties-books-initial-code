@@ -3,8 +3,8 @@ var express = require("express");
 var ejs = require("ejs");
 const path = require("path");
 var mysql = require("mysql2");
-dotenv.config();
 require("dotenv").config();
+dotenv.config();
 
 // Create the express application object
 const app = express();
