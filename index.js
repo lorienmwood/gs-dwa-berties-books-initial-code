@@ -21,7 +21,9 @@ app.use(express.static(path.join(__dirname, "public")));
 // Define our application-specific data
 app.locals.shopData = { shopName: "Bertie's Books" };
 
-console.log('DB ENV SEEN BY APP:', {
+require("dotenv").config({ path: path.join(__dirname, ".env") });
+
+console.log("DB ENV SEEN BY APP:", {
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   passwordSet: !!process.env.DB_PASSWORD,
