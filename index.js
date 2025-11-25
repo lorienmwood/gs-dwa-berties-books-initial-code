@@ -3,6 +3,7 @@ var express = require("express");
 var ejs = require("ejs");
 const path = require("path");
 var mysql = require("mysql2");
+var session = require("express-session");
 require("dotenv").config();
 
 // Create the express application object
@@ -20,6 +21,18 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Define our application-specific data
 app.locals.shopData = { shopName: "Bertie's Books" };
+
+// Create a session
+app.use(
+  session({
+    secret: "somerandomstuff",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      expires: 600000,
+    },
+  })
+);
 
 // console.log("DB ENV SEEN BY APP:", {
 //   host: process.env.DB_HOST,
@@ -58,7 +71,6 @@ const db = mysql.createPool({
 });
 
 global.db = db;
-
 
 // Load the route handlers
 const mainRoutes = require("./routes/main");

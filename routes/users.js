@@ -6,10 +6,17 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const db = global.db;
 
+const redirectLogin = (req, res, next) => {
+  if (!req.session.userId) {
+    res.redirect("/users/login"); // redirect to the login page
+  } else {
+    next(); // move to the next middleware function
+  }
+};
+
 router.get("/register", function (req, res, next) {
   res.render("register.ejs");
 });
-
 
 router.post("/registered", function (req, res, next) {
   const plainPassword = req.body.password;
@@ -122,13 +129,19 @@ router.post("/loggedin", function (req, res, next) {
           }
         );
 
-        res.send(
-          "Login successful! Welcome " +
-            user.firstName +
-            " " +
-            user.lastName +
-            "."
-        );
+        // you can store username, user.id, or both
+        req.session.userId = username;
+
+        // ✅ Redirect to a protected page
+        return res.redirect("/books/list");
+
+        // res.send(
+        //   "Login successful! Welcome " +
+        //     user.firstName +
+        //     " " +
+        //     user.lastName +
+        //     "."
+        // );
       } else {
         // Failed login: bad password
         db.query(
@@ -145,8 +158,17 @@ router.post("/loggedin", function (req, res, next) {
   });
 });
 
+router.get("/logout", redirectLogin, function (req, res, next){
+  req.session.destroy((err) => {
+    if (err) {
+      return res.redirect("/"); // something went wrong, go home
+    }
+    res.send('You are now logged out. <a href="/">Home</a>');
+  });
+});
+
 // Audit Route - Shows a list of all login attempts
-router.get("/audit", function (req, res, next) {
+router.get("/audit", redirectLogin, function (req, res, next) {
   const sqlquery =
     "SELECT username, success, message, created_at FROM audit_log ORDER BY created_at DESC";
   db.query(sqlquery, function (err, results) {

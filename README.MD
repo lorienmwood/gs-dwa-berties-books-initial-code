@@ -63,3 +63,5 @@ node index.js
 1. Audit is used to track if login attempts where successful failed login attempts.
 2. All login attempts are recorded in an audit_log table, including the username, result, message, and timestamp.
 3. Entries are added after each login attempt, and the /users/audit route displays this data, providing a simple way to monitor login activity and spot suspicious behaviour.
+
+
