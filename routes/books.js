@@ -8,7 +8,7 @@ const db = global.db;
 // Auth middleware – copy of what you used in users.js, but with correct path
 const redirectLogin = (req, res, next) => {
   if (!req.session.userId) {
-    return res.redirect("/users/login");
+    return res.redirect("../users/login");
   }
   next();
 };
