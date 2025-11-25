@@ -21,19 +21,37 @@ app.use(express.static(path.join(__dirname, "public")));
 // Define our application-specific data
 app.locals.shopData = { shopName: "Bertie's Books" };
 
+// console.log("DB ENV SEEN BY APP:", {
+//   host: process.env.DB_HOST,
+//   user: process.env.DB_USER,
+//   passwordSet: !!process.env.DB_PASSWORD,
+//   db: process.env.DB_NAME,
+// });
+
+// // Define the database connection pool
+// const db = mysql.createPool({
+//   // host: process.env,BB_HOST
+//   user: process.env.BB_USER,
+//   password: process.env.BB_PASSWORD,
+//   database: process.env.BB_DATABASE,
+//   waitForConnections: true,
+//   connectionLimit: 10,
+//   queueLimit: 0,
+// });
+
 console.log("DB ENV SEEN BY APP:", {
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  passwordSet: !!process.env.DB_PASSWORD,
-  db: process.env.DB_NAME,
+  host: process.env.BB_HOST,
+  user: process.env.BB_USER,
+  passwordSet: !!process.env.BB_PASSWORD,
+  db: process.env.BB_DATABASE,
 });
 
 // Define the database connection pool
 const db = mysql.createPool({
-  // host: process.env,BB_HOST
-  user: process.env.BB_USER,
-  password: process.env.BB_PASSWORD,
-  database: process.env.BB_DATABASE,
+  host: process.env.BB_HOST || "localhost",
+  user: process.env.BB_USER || "berties_books_app",
+  password: process.env.BB_PASSWORD || "qwertyuiop",
+  database: process.env.BB_DATABASE || "berties_books",
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
