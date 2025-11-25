@@ -59,6 +59,7 @@ const db = mysql.createPool({
 
 global.db = db;
 
+
 // Load the route handlers
 const mainRoutes = require("./routes/main");
 app.use("/", mainRoutes);
