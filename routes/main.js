@@ -8,13 +8,22 @@ const router = express.Router();
 //   }
 //   next();
 // };
+// const redirectLogin = (req, res, next) => {
+//   if (!req.session.userId) {
+  
+//     req.session.returnTo = req.originalUrl;
+//     return res.redirect("/users/login");
+//   }
+//   next();
+// };
+
 const redirectLogin = (req, res, next) => {
   if (!req.session.userId) {
-  
-    req.session.returnTo = req.originalUrl;
-    return res.redirect("/users/login");
+    // res.redirect("../users/login"); // redirect to the login page
+    return res.redirect("./login");
+  } else {
+    next(); // move to the next middleware function
   }
-  next();
 };
 
 // Handle our routes
