@@ -78,3 +78,28 @@ These pages check access and redirect to the login page if the user is not logge
 /books/list  – the full list of books is only shown to logged-in users.
 
 /users/audit - the full list of login attempts
+
+
+## Task 7: Sanitisation 
+
+#### For the register form: 
+I used express-sanitizer to protect the register form from XSS attacks.
+
+The following fields are sanitised as they may be stored or displayed. This prevents users from injecting HTML or JavaScript into the system: 
+- First name
+- Last name
+- Username
+- Email
+
+The password field is not sanitised because it is never displayed and is only hashed and stored securely. Sanitising it could change the user’s input and break login without adding extra security.
+
+#### Add Book form: 
+- The book name field is sanitised before being stored in the database to prevent users from injecting HTML or JavaScript (XSS attacks).
+
+#### Seach form: 
+- The search keyword is sanitised before being processed or displayed to protect against malicious input.
+- The price field is not sanitised because it is validated as a numeric value and should not be altered.
+
+#### Login form:
+- The username field is sanitised to prevent XSS attacks through malicious input.
+- The password field is not sanitised because it is never displayed and is only used for secure comparison with the hashed password. Sanitising it could change the input and break authentication.

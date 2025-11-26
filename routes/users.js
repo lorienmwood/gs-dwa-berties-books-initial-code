@@ -61,6 +61,8 @@ router.post(
 
       req.body.firstName = req.sanitize(req.body.firstName);
       req.body.lastName = req.sanitize(req.body.lastName);
+      req.body.username = req.sanitize(req.body.username);
+      req.body.email = req.sanitize(req.body.email);
 
       const sqlquery =
         "INSERT INTO users (username, firstName, lastName, email, hashedPassword) VALUES (?,?,?,?,?)";
@@ -219,8 +221,6 @@ router.get("/list", function (req, res, next) {
   });
 });
 
-
-
 // Login Route - Shows login form
 router.get("/login", function (req, res, next) {
   res.render("login.ejs");
@@ -239,6 +239,8 @@ router.post(
         errors: errors.array(),
       });
     }
+
+    req.body.username = req.sanitize(req.body.username);
 
     const username = req.body.username;
     const plainPassword = req.body.password;
@@ -291,11 +293,9 @@ router.post(
           req.session.userId = username;
           req.session.firstName = user.firstName;
 
-        
           delete req.session.returnTo;
           //  return res.redirect("./login");
-         return res.redirect("../");
-
+          return res.redirect("../");
         } else {
           // Failed login: bad password
           db.query(

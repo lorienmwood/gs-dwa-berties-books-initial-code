@@ -51,6 +51,8 @@ router.get(
       });
     }
 
+     req.query.keyword = req.sanitize(req.query.keyword);
+    
     const keyword = req.query.keyword || "";
     const sqlquery = "SELECT * FROM books WHERE name LIKE ?";
     const search = `%${keyword}%`;
@@ -103,7 +105,7 @@ router.get("/addbook", redirectLogin, function (req, res) {
   res.render("addbook.ejs");
 });
 
-// Route for confirmation of book being added
+
 // Route for confirmation of book being added
 router.post(
   "/bookadded",
@@ -121,6 +123,8 @@ router.post(
         oldInput: req.body,
       });
     }
+
+    req.body.name = req.sanitize(req.body.name);
 
     const sqlquery = "INSERT INTO books (name, price) VALUES (?, ?)";
     const newrecord = [req.body.name, req.body.price];
