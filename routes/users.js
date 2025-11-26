@@ -7,22 +7,22 @@ const saltRounds = 10;
 const db = global.db;
 const { check, validationResult } = require("express-validator");
 
-// const redirectLogin = (req, res, next) => {
-//   if (!req.session.userId) {
-//     res.redirect("../users/login"); // redirect to the login page
-//   } else {
-//     next(); // move to the next middleware function
-//   }
-// };
-
 const redirectLogin = (req, res, next) => {
   if (!req.session.userId) {
-    // remember the page they were trying to access
-    req.session.returnTo = req.originalUrl;
-    return res.redirect("../users/login");
+    res.redirect("../users/login"); // redirect to the login page
+  } else {
+    next(); // move to the next middleware function
   }
-  next();
 };
+
+// const redirectLogin = (req, res, next) => {
+//   if (!req.session.userId) {
+//     // remember the page they were trying to access
+//     req.session.returnTo = req.originalUrl;
+//     return res.redirect(".../users/login");
+//   }
+//   next();
+// };
 
 router.get("/register", function (req, res, next) {
   res.render("register.ejs");
