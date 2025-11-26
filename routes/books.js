@@ -26,7 +26,7 @@ const db = global.db;
 const redirectLogin = (req, res, next) => {
   if (!req.session.userId) {
     // res.redirect("../users/login"); // redirect to the login page
-    return res.redirect("./login");
+    return res.redirect("./users/login");
   } else {
     next(); // move to the next middleware function
   }
