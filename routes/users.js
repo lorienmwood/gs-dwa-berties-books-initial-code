@@ -19,7 +19,7 @@ const redirectLogin = (req, res, next) => {
   if (!req.session.userId) {
     // remember the page they were trying to access
     req.session.returnTo = req.originalUrl;
-    return res.redirect("/users/login");
+    return res.redirect("../users/login");
   }
   next();
 };
@@ -74,7 +74,7 @@ router.post(
 
       db.query(sqlquery, newrecord, (err, result) => {
         if (err) {
-          return next(err); 
+          return next(err);
         }
 
         let output =
@@ -307,10 +307,9 @@ router.post(
           req.session.firstName = user.firstName;
 
           // decide where to go next
-          const redirectUrl = req.session.returnTo || "/";
+          // const redirectUrl = req.session.returnTo || "/";
           delete req.session.returnTo;
-
-          return res.redirect(redirectUrl);
+          return res.redirect("/users/login");
         } else {
           // Failed login: bad password
           db.query(
