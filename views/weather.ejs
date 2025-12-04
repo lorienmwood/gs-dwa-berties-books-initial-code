@@ -16,6 +16,7 @@
 
         <form method="get" action="/weather">
             <label for="city">Enter city name:</label><br>
+            <br>
             <input type="text" id="city" name="city" placeholder="e.g. London" />
             <button type="submit">Submit</button>
         </form>
@@ -28,25 +29,32 @@
 
                 <% if (weather) { %>
                     <div class="weather-box">
-                        <p><span class="label">Location:</span>
-                            <%= weather.name %>
-                        </p>
-                        <p><span class="label">Temperature:</span>
-                            <%= weather.temp %> °C
-                        </p>
-                        <p><span class="label">Humidity:</span>
-                            <%= weather.humidity %> %
-                        </p>
-                        <% if (weather.windSpeed !==undefined) { %>
-                            <p><span class="label">Wind speed:</span>
-                                <%= weather.windSpeed %> m/s
-                            </p>
-                            <% } %>
-                                <% if (weather.description) { %>
-                                    <p><span class="label">Conditions:</span>
-                                        <%= weather.description %>
-                                    </p>
-                                    <% } %>
+
+                        <h2 class="weather-title">
+                            <%= weather.name %>  Weather
+                        </h2>
+
+                        <ul class="weather-list">
+                            <li><span class="label">Temperature:</span>
+                                <%= weather.temp %> °C
+                            </li>
+                            <li><span class="label">Humidity:</span>
+                                <%= weather.humidity %> %
+                            </li>
+
+                            <% if (weather.windSpeed !==undefined) { %>
+                                <li><span class="label">Wind Speed:</span>
+                                    <%= weather.windSpeed %> m/s
+                                </li>
+                                <% } %>
+
+                                    <% if (weather.description) { %>
+                                        <li><span class="label">Conditions:</span>
+                                            <%= weather.description %>
+                                        </li>
+                                        <% } %>
+                        </ul>
+
                     </div>
                     <% } %>
     </div>
