@@ -64,8 +64,7 @@ node index.js
 2. All login attempts are recorded in an audit_log table, including the username, result, message, and timestamp.
 3. Entries are added after each login attempt, and the /users/audit route displays this data, providing a simple way to monitor login activity and spot suspicious behaviour.
 
-
-## Access Control 
+## Access Control
 
 These pages check access and redirect to the login page if the user is not logged in:
 
@@ -75,17 +74,18 @@ These pages check access and redirect to the login page if the user is not logge
 
 /books/bookadded – the POST route that actually inserts a new book into the database is also restricted.
 
-/books/list  – the full list of books is only shown to logged-in users.
+/books/list – the full list of books is only shown to logged-in users.
 
 /users/audit - the full list of login attempts
 
+## Task 7: Sanitisation
 
-## Task 7: Sanitisation 
+#### For the register form:
 
-#### For the register form: 
 I used express-sanitizer to protect the register form from XSS attacks.
 
-The following fields are sanitised as they may be stored or displayed. This prevents users from injecting HTML or JavaScript into the system: 
+The following fields are sanitised as they may be stored or displayed. This prevents users from injecting HTML or JavaScript into the system:
+
 - First name
 - Last name
 - Username
@@ -93,33 +93,36 @@ The following fields are sanitised as they may be stored or displayed. This prev
 
 The password field is not sanitised because it is never displayed and is only hashed and stored securely. Sanitising it could change the user’s input and break login without adding extra security.
 
-#### Add Book form: 
+#### Add Book form:
+
 - The book name field is sanitised before being stored in the database to prevent users from injecting HTML or JavaScript (XSS attacks).
 
-#### Seach form: 
+#### Seach form:
+
 - The search keyword is sanitised before being processed or displayed to protect against malicious input.
 - The price field is not sanitised because it is validated as a numeric value and should not be altered.
 
 #### Login form:
+
 - The username field is sanitised to prevent XSS attacks through malicious input.
 - The password field is not sanitised because it is never displayed and is only used for secure comparison with the hashed password. Sanitising it could change the input and break authentication.
-
 
 ### Books API
 
 GET /api/books, returns a JSON list of all books in the database.
 
 ##### Optional Query Parameters
-| Parameter               | Example                             | Description                                    |
-| ----------------------- | ----------------------------------- | ---------------------------------------------- |
-| `search`                | `/api/books?search=world`           | Filters books whose titles contain the keyword |
-| `minprice` / `maxprice` | `/api/books?minprice=5&maxprice=10` | Returns books within a price range             |
-| `sort`                  | `/api/books?sort=name`              | Sort results by `name` or `price`              |
+
+| Parameter               | Description                           |
+| ----------------------- | ------------------------------------- |
+| `search`                | filters books by keyword              |
+| `minprice` / `maxprice` | returns books within price ranges     |
+| `sort`                  | sorts results by e.g a title or price |
 
 ##### Example Requests
+
 /api/books
 /api/books?search=world
 /api/books?minprice=5&max_price=10
 /api/books?sort=name
 /api/books?sort=price
-
